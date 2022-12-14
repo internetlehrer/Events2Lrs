@@ -1,0 +1,62 @@
+Index: Modules/Test/classes/class.ilTestOutputGUI.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Modules/Test/classes/class.ilTestOutputGUI.php b/Modules/Test/classes/class.ilTestOutputGUI.php
+--- a/Modules/Test/classes/class.ilTestOutputGUI.php
++++ b/Modules/Test/classes/class.ilTestOutputGUI.php	(date 1665135784242)
+@@ -231,6 +231,26 @@
+         $this->ctrl->setParameter($this, 'sequence', $sequenceElement);
+         $this->ctrl->setParameter($this, 'pmode', '');
+
++        /**
++         * @author Internetlehrer-GmbH
++         * @package Events2Lrs
++         */
++        global $DIC;  /** @var \ILIAS\DI\Container $DIC */
++
++        $DIC->logger()->root()->info('############## Plugins/Events2Lrs startTestPass');
++
++        $DIC->event()->raise(
++            'Modules/Test',
++            'startTestPass',
++            [
++                'active_id' => $this->testSession->getActiveId(),
++                'pass' => $this->testSession->getPass(),
++                'user_id' => $this->testSession->getUserId(),
++                'ref_id' => $this->object->getRefId()
++            ]
++        );
++        /** @package EOF Events2Lrs */
++
+         if ($this->object->getListOfQuestionsStart()) {
+             $this->ctrl->redirect($this, ilTestPlayerCommands::QUESTION_SUMMARY);
+         }
+@@ -835,6 +855,26 @@
+             $this->testSequence->saveToDb();
+         }
+
++        /**
++         * @author Internetlehrer-GmbH
++         * @package Events2Lrs
++         */
++        global $DIC;  /** @var \ILIAS\DI\Container $DIC */
++
++        $DIC->logger()->root()->info('############## Plugins/Events2Lrs resumeTestPass');
++
++        $DIC->event()->raise(
++            'Modules/Test', # Services/Tracking
++            'resumeTestPass',
++            [
++                'active_id' => $this->testSession->getActiveId(),
++                'pass' => $this->testSession->getPass(),
++                'user_id' => $this->testSession->getUserId(),
++                'ref_id' => $this->object->getRefId()
++            ]
++        );
++        /** @package EOF Events2Lrs */
++
+         if ($this->object->getListOfQuestionsStart()) {
+             $this->ctrl->redirect($this, ilTestPlayerCommands::QUESTION_SUMMARY);
+         }

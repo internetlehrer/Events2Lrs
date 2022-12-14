@@ -1,0 +1,104 @@
+Index: Services/Tracking/classes/class.ilChangeEvent.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Services/Tracking/classes/class.ilChangeEvent.php b/Services/Tracking/classes/class.ilChangeEvent.php
+--- a/Services/Tracking/classes/class.ilChangeEvent.php	(revision f6478293faa745e29d5b7b748e7d01b23a517942)
++++ b/Services/Tracking/classes/class.ilChangeEvent.php	(date 1659091524575)
+@@ -190,6 +190,23 @@
+             $aff = $ilDB->manipulate($query);
+ 
+             self::_recordObjStats($obj_id, $time_diff, $read_count_diff);
++
++            //if ($read_count != "") {
++                $DIC->event()->raise(
++                    'Services/Tracking',
++                    'readCounterChange',
++                    [
++                        'obj_id' => $obj_id,
++                        'ref_id' => $a_ref_id,
++                        'usr_id' => $usr_id,
++                        'changeEvent' => 'read_event',
++                        'changeProp' => [
++                            'spent_seconds' => $time
++                        ]
++                    ]
++                );
++            //}
++
+         } else {
+             if ($a_ext_time !== false) {
+                 $time = (int) $a_ext_time;
+@@ -197,7 +214,7 @@
+                 $time = 0;
+             }
+ 
+-            $time_diff = $time - (int) $row->spent_seconds;
++            $time_diff = $time - (int) $row->spent_seconds; //UK does not make sense
+             
+             /*
+             $query = sprintf('INSERT INTO read_event (obj_id,usr_id,last_access,read_count,spent_seconds,first_access) '.
+@@ -228,6 +245,20 @@
+             self::$has_accessed[$obj_id][$usr_id] = true;
+ 
+             self::_recordObjStats($obj_id, $time_diff, $read_count_diff);
++
++            $DIC->event()->raise(
++                'Services/Tracking',
++                'readCounterChange',
++                [
++                    'obj_id' => $obj_id,
++                    'ref_id' => $a_ref_id,
++                    'usr_id' => $usr_id,
++                    'changeEvent' => 'read_event',
++                    'changeProp' => [
++                        'spent_seconds' => $time
++                    ]
++                ]
++            );
+         }
+         
+         if ($isCatchupWriteEvents) {
+@@ -269,6 +300,20 @@
+                             $aff = $ilDB->manipulate($query);
+ 
+                             self::_recordObjStats($obj2_id, null, null, (int) $time_diff, (int) $read_count_diff);
++
++                            $DIC->event()->raise(
++                                'Services/Tracking',
++                                'afterChangeEvent',
++                                [
++                                    'obj_id' => $obj2_id,
++                                    'ref_id' => $p,
++                                    'usr_id' => $usr_id,
++                                    'changeEvent' => 'read_event',
++                                    'changeProp' => [
++                                        'spent_seconds' => ((int) $row2['childs_spent_seconds'] + $time_diff)
++                                    ]
++                                ]
++                            );
+                         } else {
+                             //echo "<br>3";
+                             //$ilLog->write("insert read event for obj_id -".$obj2_id."-".$usr_id."-");
+@@ -307,6 +352,20 @@
+                             self::$has_accessed[$obj2_id][$usr_id] = true;
+                             
+                             self::_recordObjStats($obj2_id, $time, 1, (int) $time_diff, (int) $read_count_diff);
++
++                            $DIC->event()->raise(
++                                'Services/Tracking',
++                                'afterChangeEvent',
++                                [
++                                    'obj_id' => $obj2_id,
++                                    'ref_id' => $p,
++                                    'usr_id' => $usr_id,
++                                    'changeEvent' => 'read_event',
++                                    'changeProp' => [
++                                        'spent_seconds' => $time_diff
++                                    ]
++                                ]
++                            );
+                         }
+                     }
+                 }

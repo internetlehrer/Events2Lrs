@@ -1,0 +1,61 @@
+Index: Modules/Test/classes/class.ilTestPlayerAbstractGUI.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php b/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php
+--- a/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php
++++ b/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php	(date 1665135918354)
+@@ -198,6 +198,26 @@
+
+     public function suspendTestCmd()
+     {
++        /**
++         * @author Internetlehrer-GmbH
++         * @package Events2Lrs
++         */
++        global $DIC;  /** @var \ILIAS\DI\Container $DIC */
++
++        $DIC->logger()->root()->info('############## Plugins/Events2Lrs suspendTestPass');
++
++        $DIC->event()->raise(
++            'Modules/Test',
++            'suspendTestPass',
++            [
++                'active_id' => $this->testSession->getActiveId(),
++                'pass' => $this->testSession->getPass(),
++                'user_id' => $this->testSession->getUserId(),
++                'ref_id' => $this->object->getRefId()
++            ]
++        );
++        /** @package EOF Events2Lrs */
++
+         $this->ctrl->redirectByClass("ilobjtestgui", "infoScreen");
+     }
+
+@@ -831,6 +851,25 @@
+
+         $finishTasks = new ilTestPassFinishTasks($this->testSession->getActiveId(), $this->object->getId());
+         $finishTasks->performFinishTasks($this->processLocker);
++
++
++        /**
++         * @author Internetlehrer-GmbH
++         * @package Events2Lrs
++         */
++        global $DIC;  /** @var \ILIAS\DI\Container $DIC */
++        $DIC->logger()->root()->info('############## Plugins/Events2Lrs finishTestPass');
++        $DIC->event()->raise(
++            'Modules/Test', #Modules/Test # Services/Tracking
++            'finishTestPass',
++            [
++                'active_id' => $this->testSession->getActiveId(),
++                'pass' => $this->testSession->getPass(),
++                'user_id' => $this->testSession->getUserId(),
++                'ref_id' => $this->object->getRefId()
++            ]
++        );
++        /** @package EOF Events2Lrs */
+     }
+
+     protected function afterTestPassFinishedCmd()

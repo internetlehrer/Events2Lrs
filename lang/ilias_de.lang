@@ -1,0 +1,21 @@
+cronjob_description#:#Fehlgeschlagene LRS-Requests erneut senden
+date#:#Datum
+date_failed#:#Fehler Datum
+event#:#Ereignis
+ref_id#:#RefId
+obj_id#:#ObjId
+usr_id#:#Benutzer
+statement#:#Statement
+send_failed_statements#:#Statements senden
+afterChangeEvent_info#:#Über dieses Event wird die geänderte Zeit in Containerobjekten infolge der Nutzung von in den Containern liegenden Objekten erfasst. Voraussetzung für die Erfassung der Zeiten ist, dass der über 'Administration' -> 'Lernerfolge' -> 'Zugriffsstatistiken und Lernfortschritt' einstellbare Wert für 'Maximale Zeit zwischen Anfragen' hoch genug ist, um den Aufruf von Objekten nicht als neuen Aufruf zu werten. Ansonsten bleibt die Zeit unverändert und das Statement kennzeichnet lediglich einen neuen Aufruf eines im Containerobjekt liegenden Objekts. Unabhängig vom Wert für 'Maximale Zeit zwischen Anfragen' bedeutet ein Statement, dass ein Aufruf eines im Container liegenden Objekts erfolgt ist. Wir empfehlen also den Wert für 'Maximale Zeit zwischen Anfragen' in Abhängigkeit der zu erfassenden Objekte deutlich zu erhöhen - z.B. auf 3600 Sekunden. Dies gilt mit einer Einschränkung: Sollte der Lernfortschrittsmodus bei ILIAS-Lernmodulen eingestellt sein auf 'Status wird anhand der Anzahl der Aufrufe bestimmt', so sollte der Wert für 'Maximale Zeit zwischen Anfragen' deutlich reduziert werden. Die per Statement an den LRS übertragenen Werte für Zeiten entsprechen hier der Spalte 'childs_spent_seconds' in der Datenbank-Tabelle 'read_event'.
+readCounterChange_info#:#Über dieses Event werden Aufrufe von ILIAS-Objekten erfasst. Zur Bedeutung des Werts für 'Maximale Zeit zwischen Anfragen' gelten die Aussagen wie beim afterChangeEvent. Hohe Werte dienen der besseren Erfassung von Bearbeitungszeiten. Niedrige Werte erhöhen die Werte für 'read_count' in der Datenbank-Tabelle 'read_event'. Die per Statement an den LRS übertragenen Werte für Zeiten entsprechen hier der Spalte 'spent_seconds'. Bitte beachten Sie, dass die Werte aus 'read_count' auch über 'Administration' -> 'Magazin und Objekte' -> 'Magazin' auf Info-Seiten angezeigt werden können durch Aktivierung von 'Anzahl Zugriffe anzeigen'. Wir empfehlen, die Anzahl der Zugriffe nicht anzuzeigen (ILIAS-Voreinstellung) und den Wert für 'Maximale Zeit zwischen Anfragen' zu erhöhen.
+updateStatus_info#:#Hierüber werden Änderungen am Lernfortschritt eines Objekts erfasst.
+H5P_info#:#Diese Event erfasst Benutzereingaben in H5P-Komponenten
+trackIliasLearningModulePageAccess_info#:#Diese Event erfasst Seitenaufrufe und -wechsel in ILIAS-Lernmodulen
+startTestPass_info#:#Dieses Event erfasst das Starten eines Tests
+resumeTestPass_info#:#Dieses Event erfasst das Überschreiten der Bearbeitungsdauer eines Tests
+suspendTestPass_info#:#Dieses Event erfasst das Unterbrechen eines Tests
+finishTestPass_info#:#Dieses Event erfasst das Beenden eines Tests
+finishTestResponse_info#:#Dieses Event erfasst die bei Testaufgaben von Absolvierenden gemachten Angaben
+lrs_type_not_set#:#kein LRS ausgewählt
+not_supported_cmd#:#Folgende Aktion wurde nicht ausgeführt:

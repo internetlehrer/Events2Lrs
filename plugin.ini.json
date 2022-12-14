@@ -1,0 +1,21 @@
+{
+  "defaultEvents": [
+    "sendAllStatements",
+    "sendMultiStatement"
+  ],
+  "eventTask": {
+    "afterChangeEvent": "SendSingleStatement",
+	"readCounterChange": "SendSingleStatement",
+    "sendAllStatements": "SendAllStatements",
+    "sendMultiStatement": "SendMultiStatement",
+    "updateStatus": "SendSingleStatement",
+    "H5P": "SendSingleStatement",
+    "trackIliasLearningModulePageAccess": "SendSingleStatement",
+    "startTestPass": "SendSingleStatement",
+    "resumeTestPass": "SendSingleStatement",
+    "suspendTestPass": "SendSingleStatement",
+    "finishTestPass": "SendSingleStatementFinishTestPassRaiseSendMultiStatement",
+    "finishTestResponse": "SendSingleStatement"
+  }
+}
+

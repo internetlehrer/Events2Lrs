@@ -1,0 +1,25 @@
+<!-- fim: [exco] new template. -->
+<!-- BEGIN row -->
+<tr class="{CSS_ROW}">
+    <TD>
+        {ROWSELECTOR}
+    </TD>
+    <td>{DATE_FAILED}</td>
+    <td>{EVENT}</td>
+    <td>{DATE}</td>
+    <td>{REF_ID}</td>
+    <td>{OBJ_ID}</td>
+    <td>{USR_ID}</td>
+    <td>
+        {MODAL}
+        &nbsp;&nbsp;
+        <script>
+          let consoleOutput{QUEUE_ID} = {
+            'STATEMENT': JSON.parse('{STATEMENT}'),
+            'EVENT-PARAMETER': JSON.parse('{PARAMETERS}')
+          };
+        </script>
+        <a href="javascript: console.log('#{QUEUE_ID}'); console.dir(consoleOutput{QUEUE_ID});" class="">console.log(#{QUEUE_ID})</a>
+    </td>
+</tr>
+<!-- END row -->

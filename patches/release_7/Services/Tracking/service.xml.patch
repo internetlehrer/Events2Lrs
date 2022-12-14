@@ -1,0 +1,14 @@
+diff --git a/Services/Tracking/service.xml b/Services/Tracking/service.xml
+--- a/Services/Tracking/service.xml	(revision f6478293faa745e29d5b7b748e7d01b23a517942)
++++ b/Services/Tracking/service.xml	(date 1659091848509)
+@@ -10,7 +10,9 @@
+ 		</object>
+ 	</objects>
+ 	<events>		
+-		<event type="raise" id="updateStatus" />	
++		<event type="raise" id="updateStatus" />
++		<event type="raise" id="readCounterChange" />
++		<event type="raise" id="afterChangeEvent" />
+ 		<event type="listen" id="Services/Object" />
+ 		<event type="listen" id="Services/Tree" />
+ 	</events>

@@ -1,0 +1,21 @@
+Index: App/Customizing/global/plugins/Services/Cron/CronHook/Events2Lrs/patches/release_6/Modules/Test/module.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Modules/Test/module.xml b/Modules/Test/module.xml
+--- a/Modules/Test/module.xml
++++ b/Modules/Test/module.xml	(date 1665406757638)
+@@ -30,6 +30,12 @@
+ 			<parent id="wfld">wfld</parent>
+ 		</object>
+ 	</objects>
++	<events>
++		<event type="raise" id="finishTestPass" />
++		<event type="raise" id="resumeTestPass" />
++		<event type="raise" id="startTestPass" />
++		<event type="raise" id="suspendTestPass" />
++	</events>
+ 	<crons>
+ 		<cron id="finish_unfinished_passes" class="ilCronFinishUnfinishedTestPasses" />
+ 	</crons>

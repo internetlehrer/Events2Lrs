@@ -1,0 +1,46 @@
+Index: Modules/LearningModule/classes/class.ilLMTracker.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Modules/LearningModule/classes/class.ilLMTracker.php b/Modules/LearningModule/classes/class.ilLMTracker.php
+--- a/Modules/LearningModule/classes/class.ilLMTracker.php	
++++ b/Modules/LearningModule/classes/class.ilLMTracker.php	(date 1663766726243)
+@@ -256,6 +256,37 @@
+                 $read_diff = 1;
+             }
+ 
++
++            /**
++             * @author Internetlehrer GmbH
++             * @package Events2Lrs
++             */
++            if(!$this->dirty) {
++
++                /** @var ILIAS\DI\Container $DIC */ global $DIC;
++
++                $eventParam = [
++                    'obj_id' => ilObject::_lookupObjId($this->lm_ref_id),
++                    'ref_id' => $this->lm_ref_id,
++                    'pg_id' => $a_page_id,
++                    'usr_id' => $this->user_id,
++                    'time_diff' => $time_diff,
++                    'read_diff' => $read_diff,
++                ];
++
++                #$DIC->dex($eventParam);
++
++                $DIC->event()->raise(
++                    'Services/Tracking',
++                    'trackIliasLearningModulePageAccess',
++                    $eventParam
++                );
++
++            }
++            /** @package EOF Events2Lrs */
++
++
++
+             // find parent chapter(s) for that page
+             $parent_st_ids = array();
+             foreach ($this->lm_tree->getPathFull($pg_id) as $item) {

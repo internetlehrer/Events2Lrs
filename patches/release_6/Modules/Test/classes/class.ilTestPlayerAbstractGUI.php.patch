@@ -1,0 +1,54 @@
+diff --git a/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php b/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php
+--- a/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php	
++++ b/Modules/Test/classes/class.ilTestPlayerAbstractGUI.php	(date 1664186142253)
+@@ -200,6 +200,24 @@
+ 
+     public function suspendTestCmd()
+     {
++        /**
++         * @author Internetlehrer-GmbH
++         * @package Events2Lrs
++         */
++        global $DIC;  /** @var \ILIAS\DI\Container $DIC */
++
++        $DIC->event()->raise(
++            'Modules/Test',
++            'suspendTestPass',
++            [
++                'active_id' => $this->testSession->getActiveId(),
++                'pass' => $this->testSession->getPass(),
++                'user_id' => $this->testSession->getUserId(),
++                'ref_id' => $this->object->getRefId()
++            ]
++        );
++        /** @package EOF Events2Lrs */
++        
+         $this->ctrl->redirectByClass("ilobjtestgui", "infoScreen");
+     }
+ 
+@@ -832,6 +850,25 @@
+ 
+         $finishTasks = new ilTestPassFinishTasks($this->testSession->getActiveId(), $this->object->getId());
+         $finishTasks->performFinishTasks($this->processLocker);
++
++
++        /**
++         * @author Internetlehrer-GmbH
++         * @package Events2Lrs
++         */
++        global $DIC;  /** @var \ILIAS\DI\Container $DIC */
++
++        $DIC->event()->raise(
++            'Modules/Test',
++            'finishTestPass',
++            [
++                'active_id' => $this->testSession->getActiveId(),
++                'pass' => $this->testSession->getPass(),
++                'user_id' => $this->testSession->getUserId(),
++                'ref_id' => $this->object->getRefId()
++            ]
++        );
++        /** @package EOF Events2Lrs */
+     }
+ 
+     protected function afterTestPassFinishedCmd()
