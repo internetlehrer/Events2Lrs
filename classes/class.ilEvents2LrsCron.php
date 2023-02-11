@@ -8,6 +8,9 @@
  * @author      Björn Heyser <info@bjoernheyser.de>
  */
 
+
+require_once dirname(__DIR__) . "/vendor/autoload.php";
+
 use \ILIAS\DI\Container;
 
 class ilEvents2LrsCron extends ilCronJob
@@ -92,5 +95,5 @@ class ilEvents2LrsCron extends ilCronJob
 
 		return $cronResult;
 	}
-	
+
 }

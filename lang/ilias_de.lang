@@ -19,3 +19,5 @@ finishTestPass_info#:#Dieses Event erfasst das Beenden eines Tests
 finishTestResponse_info#:#Dieses Event erfasst die bei Testaufgaben von Absolvierenden gemachten Angaben
 lrs_type_not_set#:#kein LRS ausgewählt
 not_supported_cmd#:#Folgende Aktion wurde nicht ausgeführt:
+async_cronjob_title#:#asyncEvents2Lrs
+async_cronjob_description#:#UI-Based Cronjob, zum Versand von Statements

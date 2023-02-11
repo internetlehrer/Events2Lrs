@@ -174,6 +174,40 @@ class Events2LrsRouterGUI
     }
 
 
+    public function sendAllStatements() : void
+    {
+        try {
+
+            ilEvents2LrsAsyncCron::runAsync();
+            /*
+            $this->dic->event()->raise('Services/Tracking', 'sendAllStatements', [
+                'obj_id' => 1,
+                'ref_id' => 1,
+                'usr_id' => $this->dic->user()->getId(),
+                #'event' => 'SendAllStatements'
+            ]);
+*/
+            /*
+            $events2Lrs = new ilEvents2LrsPlugin();
+            $events2Lrs->handleEvent('Services/Tracking', 'sendAllStatements', [
+                'obj_id' => 1,
+                'ref_id' => 1,
+                'usr_id' => $this->dic->user()->getId(),
+                'event' => 'SendAllStatements'
+            ]);
+            */
+            $this->dic->logger()->root()->log('ASYNC REQUEST');
+
+        } catch(Exception $e) {
+
+            $this->dic->logger()->root()->log($e->getMessage());
+
+            exit(500);
+
+        }
+    }
+
+
     public function execBT() : bool
     {
          $post = $this->dic->http()->request()->getParsedBody();
@@ -182,7 +216,7 @@ class Events2LrsRouterGUI
 
         $queueId = $post['queue_id'];
 
-        /** @var Event\Services\Tracking\UiEvent|Event\Services\Tracking\SendAllStatements|Event\Services\Tracking\UpdateStatus $ns */
+        /** @var Event\Services\Tracking\H5P|Event\Services\Tracking\SendAllStatements|Event\Services\Tracking\UpdateStatus $ns */
         new $ns($queueId);
 
         return true;

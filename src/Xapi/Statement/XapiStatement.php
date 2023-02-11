@@ -352,7 +352,19 @@ class XapiStatement implements JsonSerializable, XapiStatementInterface
                 $context['extensions'][$extId] = $extValue;
 
             }
+
+            foreach(array_keys($context['extensions']) as $extKey) {
+
+                $newExtKey = str_replace('.', '&46;', $extKey);
+
+                $context['extensions'][$newExtKey] = $context['extensions'][$extKey];
+
+                unset($context['extensions'][$extKey]);
+
+            }
+
 		}
+
 
         $categories = $this->getObjectCategories($this->object);
 

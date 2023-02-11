@@ -91,6 +91,10 @@ class HandlePsr7XapiRequest
 
             }
 
+        } else {
+
+            $this->modifyResponseSendAllStatements();
+
         }
 
 
@@ -219,6 +223,38 @@ HEREDOC;
 
     }
 
+
+    private function modifyResponseSendAllStatements() : void
+    {
+        $urlParts = parse_url(ILIAS_HTTP_PATH . '/' . Events2LrsRouterGUI::getUrl('sendAllStatements'));
+
+        /** @var array $queryParam */
+        parse_str($urlParts['query'], $queryParam);
+
+        $cmdClassParts = explode('\\', $queryParam['cmdClass']);
+
+        $queryParam['cmdClass'] = array_pop($cmdClassParts);
+
+        $urlRouterQuery = http_build_query($queryParam);
+
+        $urlRouter = ILIAS_HTTP_PATH . '/ilias.php?' . $urlRouterQuery;
+//if(!$this->dic->http()->request()->hasHeader('X-Requested-With')) {
+//    echo <<<HEREDOC
+//<script>
+//(function ($) {
+//
+//    $(window).one('load', function (e) {
+//        $.ajax({
+//            type: 'GET',
+//            async: true,
+//            url: "$urlRouter"
+//        });
+//    });
+//})(jQuery);
+//</script>
+//HEREDOC;
+//}
+    }
 
     public static function fixUITemplateInCronContext() : void
     {

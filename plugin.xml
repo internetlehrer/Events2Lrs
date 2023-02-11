@@ -2,6 +2,7 @@
 <plugin id="xelrs">
     <events>
         <event type="raise" id="sendAllStatements" />
+        <event type="listen" id="Plugins/Events2Lrs" />
         <event type="listen" id="Services/Tracking" />
         <event type="listen" id="Services/Object" />
         <event type="listen" id="Services/Tree" />

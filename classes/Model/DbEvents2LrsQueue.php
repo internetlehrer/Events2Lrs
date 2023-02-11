@@ -485,6 +485,8 @@ trait DbEvents2LrsQueue
             " WHERE " . $this->dic->database()->quoteIdentifier('state') .
              "=" . $this->dic->database()->quote(self::$STATE_TASK_SCHEDULE, 'integer');
 
+        #$this->dic->logger()->root()->dump($sql);
+
         $res = $this->dic->database()->query($sql);
 
         while($row = $this->dic->database()->fetchAssoc($res)) {
@@ -505,11 +507,13 @@ trait DbEvents2LrsQueue
                 " WHERE queue_id IN (" . implode(',', $queueIds) . ")");
         }
 
+        #$this->dic->logger()->root()->dump($data);
+
         return $data;
 
     }
 
-    public function getQueueEntriesWithStateInitialized(bool $setRunning = false, bool  $onlyStatement = false) : array
+    public function getQueueEntriesWithStateInitialized(bool $setRunning = false, bool  $onlyStatement = false, ?int $userId = null) : array
     {
         $data =
         $queueIds = [];
@@ -518,10 +522,14 @@ trait DbEvents2LrsQueue
 
         # " . $filter . "
 
+        $fieldUsrId = $this->dic->database()->quoteIdentifier('usr_id');
+        $andWhere = !$userId ? '' : " AND $fieldUsrId = " . $this->dic->database()->quote($userId, 'integer');
+
         $sql = "SELECT * FROM " .
             $this->dic->database()->quoteIdentifier(self::$DB_TBL_NAME_EVENTS2LRS_QUEUE) .
             " WHERE " . $this->dic->database()->quoteIdentifier('state') .
-            "=" . $this->dic->database()->quote(self::$STATE_INIT, 'integer');
+            "=" . $this->dic->database()->quote(self::$STATE_INIT, 'integer') .
+            $andWhere;
 
         $res = $this->dic->database()->query($sql);
 

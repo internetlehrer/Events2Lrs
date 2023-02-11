@@ -64,6 +64,7 @@ return array(
     'ILIAS\\Plugins\\Events2Lrs\\DI\\Database\\QueryBuilder' => $baseDir . '/src/DI/Database/QueryBuilder.php',
     'ILIAS\\Plugins\\Events2Lrs\\DI\\Database\\Select' => $baseDir . '/src/DI/Database/Select.php',
     'ILIAS\\Plugins\\Events2Lrs\\Router\\HandlePsr7XapiRequest' => $baseDir . '/classes/Router/HandlePsr7XapiRequest.php',
+    'ilEvents2LrsAsyncCron' => $baseDir . '/classes/class.ilEvents2LrsAsyncCron.php',
     'ilEvents2LrsConfigGUI' => $baseDir . '/classes/class.ilEvents2LrsConfigGUI.php',
     'ilEvents2LrsCron' => $baseDir . '/classes/class.ilEvents2LrsCron.php',
     'ilEvents2LrsPlugin' => $baseDir . '/classes/class.ilEvents2LrsPlugin.php',

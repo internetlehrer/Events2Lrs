@@ -372,7 +372,7 @@ class ilEvents2LrsConfigGUI extends ilPluginConfigGUI
 
         $form->addCommandButton('save_tracking_verbs', $this->lng->txt('save'));
 
-        $form->setTitle('Tracking Verbs');
+        $form->setTitle('Tracking Verbs H5P');
 
         $verbList = ilEvents2LrsPlugin::getAllVerbs();
 

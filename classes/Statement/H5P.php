@@ -186,7 +186,7 @@ class H5P extends AbstractStatement
 
             if ($localContentId) {
 
-                $stringIds .=  '&' . self::H5P_OBJ_DEF_EXT_ID['localContent'] . '=' . $localContentId;
+                $stringIds .=  '&h5p_object_id=' . $localContentId;
 
             }
 
@@ -200,9 +200,15 @@ class H5P extends AbstractStatement
 
         }
 
-        if($gotoLink = $this->eventParam['uiEventData']['queryParamH5PModule']['gotoLink'] ?? null) {
+        if('illmpresentationgui' === strtolower($this->urlParams['baseClass'])) {
 
-            return $gotoLink . $stringIds;
+            $lm_id = \ilObjLearningModuleAccess::_getLastAccessedPage($this->urlParams['ref_id'], $this->user->getId());
+
+            $this->urlParams['obj_id'] = $lm_id;
+
+            $targetRef = $lm_id . '_' . $this->urlParams['ref_id'];
+
+            return ilLink::_getLink($targetRef, 'pg') .  $stringIds;
 
         }
 
@@ -214,12 +220,61 @@ class H5P extends AbstractStatement
 
         }
 
+        if('lm_' === substr(strtolower($this->urlParams['target']),0,3)) {
+
+            $this->urlParams['ref_id'] = (int) substr($this->urlParams['target'],3);
+
+            $lm_id = \ilObjLearningModuleAccess::_getLastAccessedPage($this->urlParams['ref_id'], $this->user->getId());
+
+            $this->urlParams['obj_id'] = $lm_id;
+
+            $targetRef = $lm_id . '_' . $this->urlParams['ref_id'];
+
+            return ilLink::_getLink($targetRef, 'pg') .  $stringIds;
+
+        }
+
+        if('pg_' === substr(strtolower($this->urlParams['target']),0,3)) {
+
+            $ar = explode('_', $this->urlParams['target']);
+
+            if (is_array($ar) && count($ar) == 3) {
+                $this->urlParams['ref_id'] = (int) $ar[2];
+                $this->urlParams['obj_id'] = (int) $ar[1];
+                $targetRef = (string) $ar[1] . '_' . $ar[2];
+                return ilLink::_getLink($targetRef, 'pg') .  $stringIds;
+            }
+
+        }
+
+        if('st_' === substr(strtolower($this->urlParams['target']),0,3)) {
+
+            $ar = explode('_', $this->urlParams['target']);
+
+            if (is_array($ar) && count($ar) == 3) {
+                $this->urlParams['ref_id'] = (int) $ar[2];
+                $lm_id = \ilObjLearningModuleAccess::_getLastAccessedPage($this->urlParams['ref_id'], $this->user->getId());
+                $this->urlParams['obj_id'] = $lm_id;
+                $targetRef = (string) $lm_id . '_' . $ar[2];
+                return ilLink::_getLink($targetRef, 'pg') .  $stringIds;
+            }
+
+        }
+
+        if($gotoLink = $this->eventParam['uiEventData']['queryParamH5PModule']['gotoLink'] ?? null) {
+
+            return $gotoLink . $stringIds;
+
+        }
+
         return ilLink::_getLink($object->getRefId(), $object->getType()) . $stringIds;
 
     }
 
     public function getObjectProperties(ilObject $object): array
     {
+        $permaLink = $this->getObjectPermaLink($object, true, $this->localContentId, $this->subContentId);
+
         $name = [];
 
         $name[] = $object->getTitle(); //evtl. ergaenzen: $object->getType()
@@ -250,7 +305,7 @@ class H5P extends AbstractStatement
 
         $name = implode($name);
 
-        $permaLink = $this->getObjectPermaLink($object, $this->localContentId, $this->subContentId);
+//        $permaLink = $this->getObjectPermaLink($object, true, $this->localContentId, $this->subContentId);
 
         $objectProperties = [
             'id' => $permaLink,

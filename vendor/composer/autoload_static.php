@@ -65,6 +65,7 @@ class ComposerStaticInitf7fa6595d845659fbdd0171473fcfdc4
         'ILIAS\\Plugins\\Events2Lrs\\DI\\Database\\QueryBuilder' => __DIR__ . '/../..' . '/src/DI/Database/QueryBuilder.php',
         'ILIAS\\Plugins\\Events2Lrs\\DI\\Database\\Select' => __DIR__ . '/../..' . '/src/DI/Database/Select.php',
         'ILIAS\\Plugins\\Events2Lrs\\Router\\HandlePsr7XapiRequest' => __DIR__ . '/../..' . '/classes/Router/HandlePsr7XapiRequest.php',
+        'ilEvents2LrsAsyncCron' => __DIR__ . '/../..' . '/classes/class.ilEvents2LrsAsyncCron.php',
         'ilEvents2LrsConfigGUI' => __DIR__ . '/../..' . '/classes/class.ilEvents2LrsConfigGUI.php',
         'ilEvents2LrsCron' => __DIR__ . '/../..' . '/classes/class.ilEvents2LrsCron.php',
         'ilEvents2LrsPlugin' => __DIR__ . '/../..' . '/classes/class.ilEvents2LrsPlugin.php',

@@ -154,7 +154,7 @@ Der auf stündliche Ausführung voreingestellte Event2Lrs-CronJob wirft das Even
 
 ## Weitere Events hinzufügen
 
-Damit der Plugin-EventHandler auf weitere Events reagiert, müssen Pluginseits folgende Voraussetzungen erfüllt sein:
+Damit der Plugin-EventHandler auf weitere Events reagiert, müssen Plugin-seitig folgende Voraussetzungen erfüllt sein:
 
 - xml event-tag mit listen-property der angesprochenen Component
 
