@@ -134,11 +134,11 @@ class XapiRequest
 
                     if($this->requestStatus = $response->getStatusCode() === 200) {
 
-                        $this->log->log('SUCCESS: Status : '.$response->getStatusCode().' | Response: ' . $response->getBody());
+                        $this->log->debug('SUCCESS: Status : '.$response->getStatusCode().' | Response: ' . $response->getBody());
 
                     } else {
 
-                        $this->log->log('FAILED: Status : '.$response->getStatusCode().' | Response: ' . $response->getBody());
+                        $this->log->debug('FAILED: Status : '.$response->getStatusCode().' | Response: ' . $response->getBody());
 
                     }
                 });

@@ -158,7 +158,7 @@ class ilEvents2LrsAsyncCron extends ilCronJob
 
         }
 
-        /*
+
         if(count($statements)) {
 
             $this->dic->event()->raise('Services/Tracking', 'handleQueueEntries', [
@@ -167,7 +167,7 @@ class ilEvents2LrsAsyncCron extends ilCronJob
                 'usr_id' => $this->dic->user()->getId(),
             ]);
         }
-        */
+
     }
 
     private function withUserId() : ?int

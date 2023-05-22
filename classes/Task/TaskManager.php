@@ -51,7 +51,12 @@ class TaskManager extends AsyncTaskManager
 
         $this->dic = $DIC;
 
-        $persistence = \ILIAS\BackgroundTasks\Implementation\Persistence\BasicPersistence::instance();
+        if ((float)ILIAS_VERSION_NUMERIC < 7.2) {
+            $persistence = \ILIAS\BackgroundTasks\Implementation\Persistence\BasicPersistence::instance();
+        } else {
+            $persistence = \ILIAS\BackgroundTasks\Implementation\Persistence\BasicPersistence::instance($DIC->database());
+        }
+
         $persistingObserver = new PersistingObserver($bucket, $persistence);
 
         $bucket->setState(State::SCHEDULED);
@@ -61,13 +66,13 @@ class TaskManager extends AsyncTaskManager
         $this->dic->backgroundTasks()->persistence()->saveBucketAndItsTasks($bucket);
 
         $this->bucketId = $DIC->backgroundTasks()->persistence()->getBucketContainerId($bucket);
-        $this->dic->logger()->root()->info("[BT MAN] ########################## #[BT MAN BOF] bucketId $this->bucketId ");
+        $this->dic->logger()->root()->debug("[BT MAN] ########################## #[BT MAN BOF] bucketId $this->bucketId ");
 
-        $this->dic->logger()->root()->log("[BT MAN] ########################### [BT MAN BOF] updateQueueEntryWithStateScheduledById STATE_TASK_SCHEDULE ");
+        $this->dic->logger()->root()->debug("[BT MAN] ########################### [BT MAN BOF] updateQueueEntryWithStateScheduledById STATE_TASK_SCHEDULE ");
         $this->state = self::$STATE_TASK_SCHEDULE;
         $this->updateQueueEntryWithStateScheduledById();
 
-        $this->dic->logger()->root()->log('[BT MAN] ########################### [BT MAN BOF] updateQueueEntryWithBucketId ');
+        $this->dic->logger()->root()->debug('[BT MAN] ########################### [BT MAN BOF] updateQueueEntryWithBucketId ');
         $this->updateQueueEntryWithBucketId();
 
         // todo enable for sync exec if initialized by plugin RouterGUI
@@ -88,9 +93,9 @@ class TaskManager extends AsyncTaskManager
             $call = $soap_client->call(self::CMD_START_WORKER, array(
                 $session_id . '::' . $client_id,
             ));
-        } catch(\Throwable $t) {
+        } catch(\Exception $e) {
 
-            $DIC->logger()->root()->dump($t);
+            $this->dic->logger()->root()->info("Soap Issue " . $e);
 
         }
 

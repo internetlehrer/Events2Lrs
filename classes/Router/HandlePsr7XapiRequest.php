@@ -93,7 +93,7 @@ class HandlePsr7XapiRequest
 
         } else {
 
-            $this->modifyResponseSendAllStatements();
+            #$this->modifyResponseSendAllStatements();
 
         }
 
@@ -238,22 +238,22 @@ HEREDOC;
         $urlRouterQuery = http_build_query($queryParam);
 
         $urlRouter = ILIAS_HTTP_PATH . '/ilias.php?' . $urlRouterQuery;
-//if(!$this->dic->http()->request()->hasHeader('X-Requested-With')) {
-//    echo <<<HEREDOC
-//<script>
-//(function ($) {
-//
-//    $(window).one('load', function (e) {
-//        $.ajax({
-//            type: 'GET',
-//            async: true,
-//            url: "$urlRouter"
-//        });
-//    });
-//})(jQuery);
-//</script>
-//HEREDOC;
-//}
+if(!$this->dic->http()->request()->hasHeader('X-Requested-With')) {
+    echo <<<HEREDOC
+<script>
+(function ($) {
+
+    $(window).one('load', function (e) {
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: "$urlRouter"
+        });
+    });
+})(jQuery);
+</script>
+HEREDOC;
+}
     }
 
     public static function fixUITemplateInCronContext() : void
@@ -274,7 +274,7 @@ HEREDOC;
                      */
                     public function __construct()
                     {
-                        //parent::__construct();
+                        #parent::__construct();
                     }
                 };
             }

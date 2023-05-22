@@ -235,7 +235,7 @@ trait DbEvents2LrsQueue
             $this->getBtBucketPercentageById($bucketId) === 100
         ) {
 
-            $this->deleteAllBtEntriesByBucketId($bucketId);
+            #$this->deleteAllBtEntriesByBucketId($bucketId);
 
             $this->deleteQueueEntryById($queueId);
         }

@@ -307,7 +307,7 @@ class ilEvents2LrsPlugin extends ilCronHookPlugin {
 
                 case $this->storedParams[$event] === $parameters:
 
-                    $this->dic->logger()->root()->info('#################### Events2Lrs handleEvent break @LINE: ' . __LINE__);
+                    $this->dic->logger()->root()->debug('#################### Events2Lrs handleEvent break @LINE: ' . __LINE__);
 
                     break;
 
@@ -320,7 +320,7 @@ class ilEvents2LrsPlugin extends ilCronHookPlugin {
 
                     if (null !== $queueId = $this->addInitialDbEntrty($parameters)) {
 
-                        $this->dic->logger()->root()->info('#################### Events2Lrs handleEvent addInitialDbEntrty: ' . $queueId);
+                        $this->dic->logger()->root()->debug('#################### Events2Lrs handleEvent addInitialDbEntrty: ' . $queueId);
 
                         $ns = implode('\\', [
                             'ILIAS\Plugin\Events2Lrs',
