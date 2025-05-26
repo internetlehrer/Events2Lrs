@@ -228,7 +228,7 @@ class XapiStatement implements JsonSerializable, XapiStatementInterface
 			$identMode = $this->lrsType->getUserIdent();
 			$nameMode = $this->lrsType->getUserName();
 		}
-        try {
+        if ($this->user) {
             return [
                 'objectType' => 'Agent',
                 #'mbox' => 'mailto:'.ilCmiXapiUser::getIdent($identMode ,$this->user),
@@ -238,7 +238,7 @@ class XapiStatement implements JsonSerializable, XapiStatementInterface
                 ],
                 'name' => ilCmiXapiUser::getName($nameMode ,$this->user)
             ];
-        } catch (Exception $e) {
+        } else {
             return [
                 'objectType' => 'Agent',
                 'account' => [
