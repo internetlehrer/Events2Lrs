@@ -228,15 +228,26 @@ class XapiStatement implements JsonSerializable, XapiStatementInterface
 			$identMode = $this->lrsType->getUserIdent();
 			$nameMode = $this->lrsType->getUserName();
 		}
-		return [
-			'objectType' => 'Agent',
-        	#'mbox' => 'mailto:'.ilCmiXapiUser::getIdent($identMode ,$this->user),
-            'account' => [
-                'homePage' => 'http://' . $_SERVER['HTTP_HOST'],
-                'name' => ilCmiXapiUser::getIdent($identMode ,$this->user)
-            ],
-        	'name' => ilCmiXapiUser::getName($nameMode ,$this->user)
-		];
+        try {
+            return [
+                'objectType' => 'Agent',
+                #'mbox' => 'mailto:'.ilCmiXapiUser::getIdent($identMode ,$this->user),
+                'account' => [
+                    'homePage' => 'http://' . $_SERVER['HTTP_HOST'],
+                    'name' => ilCmiXapiUser::getIdent($identMode ,$this->user)
+                ],
+                'name' => ilCmiXapiUser::getName($nameMode ,$this->user)
+            ];
+        } catch (Exception $e) {
+            return [
+                'objectType' => 'Agent',
+                'account' => [
+                    'homePage' => 'http://' . $_SERVER['HTTP_HOST'],
+                    'name' => 'unknown_or_deleted@example.com'
+                ],
+                'name' => 'unknown_or_deleted'
+            ];
+        }
 	}
 	
 	/**
